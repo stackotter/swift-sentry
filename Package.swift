@@ -1,24 +1,6 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 
 import PackageDescription
-
-let currentDirectory = Context.packageDirectory
-let swiftSettings: [SwiftSetting] =  [
-    .unsafeFlags(["-I\(currentDirectory)/vendor/sentry-native/include"])
-]
-var clientLinkerSettings: [LinkerSetting] = []
-
-// Generate the linker paths that are required on different platforms
-let linkerBase = "-L\(currentDirectory)/vendor/sentry-native/lib"
-let platforms: [(String, Platform)] = [
-    ("macOS", .macOS),
-    ("linux64", .linux),
-    ("win64", .windows)
-]
-
-clientLinkerSettings += platforms.map {
-    .unsafeFlags(["\(linkerBase)/\($0.0)"], .when(platforms: [$0.1]))
-}
 
 let guiLinkerSettings: [LinkerSetting] = [
     .unsafeFlags(["-Xlinker", "/SUBSYSTEM:WINDOWS"], .when(configuration: .release)),
@@ -38,22 +20,24 @@ let package = Package(
             targets: ["SwiftSentry"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/tayloraswift/swift-hash", .upToNextMinor(from: "0.6.3"))
+    ],
     targets: [
         .target(
             name: "sentry",
-            publicHeadersPath: "include",
-            swiftSettings: swiftSettings,
-            linkerSettings: clientLinkerSettings
+            publicHeadersPath: "include"
         ),
         .target(
             name: "SwiftSentry",
-            dependencies: ["sentry"],
-            swiftSettings: swiftSettings
+            dependencies: [
+                "sentry",
+                .product(name: "SHA2", package: "swift-hash"),
+            ]
         ),
         .testTarget(
             name: "SwiftSentryTests",
-            dependencies: ["SwiftSentry"],
-            swiftSettings: swiftSettings
+            dependencies: ["SwiftSentry"]
         ),
     ]
 )
@@ -70,7 +54,7 @@ package.targets += [
         name: "SentryExampleMacOS",
         dependencies: ["SwiftSentry"],
         path: "Examples/SentryExampleMacOS",
-        swiftSettings: swiftSettings + [.unsafeFlags(["-parse-as-library"])]
+        swiftSettings: [.unsafeFlags(["-parse-as-library"])]
     )
 ]
 #endif
@@ -85,9 +69,12 @@ package.products += [
 package.dependencies += [
     // This revision is important since it's the first one before the swift-win32 repo moved to versioned symlinks
     // for different swift-tools-versions.
-    .package(url: "https://github.com/compnerd/swift-win32", revision: "07e91e67e86f173743329c6753d9e66ac4727830"),
+    .package(
+        url: "https://github.com/compnerd/swift-win32",
+        revision: "07e91e67e86f173743329c6753d9e66ac4727830"),
     .package(url: "https://github.com/thebrowsercompany/swift-windowsappsdk", branch: "main"),
-    .package(url: "https://github.com/thebrowsercompany/swift-windowsfoundation", branch: "main"),
+    .package(
+        url: "https://github.com/thebrowsercompany/swift-windowsfoundation", branch: "main"),
     .package(url: "https://github.com/thebrowsercompany/swift-winui", branch: "main"),
 ]
 package.targets += [
@@ -99,7 +86,7 @@ package.targets += [
 
         ],
         path: "Examples/SentryExampleWin",
-        swiftSettings: swiftSettings + [.unsafeFlags(["-parse-as-library"])]
+        swiftSettings: [.unsafeFlags(["-parse-as-library"])]
     ),
     .executableTarget(
         name: "SentryExampleWinUI",
@@ -109,7 +96,7 @@ package.targets += [
             .product(name: "WindowsFoundation", package: "swift-windowsfoundation"),
         ],
         path: "Examples/SentryExampleWinUI",
-        swiftSettings: swiftSettings + [.unsafeFlags(["-parse-as-library"])],
+        swiftSettings: [.unsafeFlags(["-parse-as-library"])],
         linkerSettings: guiLinkerSettings
     ),
 ]

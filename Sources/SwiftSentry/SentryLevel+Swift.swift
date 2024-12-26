@@ -17,7 +17,7 @@ extension SentryLevel {
     public static let fatal = SENTRY_LEVEL_FATAL
 }
 
-extension SentryLevel: CustomStringConvertible {
+extension SentryLevel: Swift.CustomStringConvertible {
     public var description: String {
         switch self {
         case SENTRY_LEVEL_DEBUG:

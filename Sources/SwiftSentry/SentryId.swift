@@ -20,9 +20,9 @@ public struct SentryId: CustomStringConvertible {
   public init(UUIDString string: String) {
     var uuid: Foundation.UUID = .empty
 
-    if string.length == 36 {
+    if string.count == 36 {
       uuid = Foundation.UUID(uuidString: string) ?? .empty
-    } else if string.length == 32 {
+    } else if string.count == 32 {
       var mutableString = string
 
       mutableString.insert("-", at: 8)
@@ -47,7 +47,7 @@ public struct SentryId: CustomStringConvertible {
 }
 
 private extension Foundation.UUID {
-  static var empty = Foundation.UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
+  static let empty = Foundation.UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
 }
 
 private extension String {

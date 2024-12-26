@@ -9,7 +9,7 @@ enum MacOSExample {
     static func main() {
         let app = NSApplication.shared
         startSentry()
-        defer { Sentry.close() }
+        defer { SentrySDK.close() }
 
         print("Hello macOS")
 
@@ -24,7 +24,7 @@ enum MacOSExample {
             }
 
             let user = User(userId: "1", email: "archie@arc.net")
-            Sentry.setUser(user)
+            SentrySDK.setUser(user)
 
             var crumb = Breadcrumb(withLevel: .warning, category: "info")
             crumb.message = "We've started Sentry"
@@ -32,7 +32,7 @@ enum MacOSExample {
                 "processors": Int32(ProcessInfo.processInfo.activeProcessorCount)
             ]
 
-            Sentry.addBreadcrumb(crumb)
+            SentrySDK.addBreadcrumb(crumb)
         }
     }
 }
