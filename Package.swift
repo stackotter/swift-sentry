@@ -21,7 +21,10 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/tayloraswift/swift-hash", .upToNextMinor(from: "0.6.3"))
+        .package(
+            url: "https://github.com/stackotter/swift-hash",
+            .upToNextMinor(from: "0.6.4")
+        )
     ],
     targets: [
         .target(
