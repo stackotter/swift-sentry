@@ -26,7 +26,7 @@ enum MacOSExample {
             let user = User(userId: "1", email: "archie@arc.net")
             SentrySDK.setUser(user)
 
-            var crumb = Breadcrumb(withLevel: .warning, category: "info")
+            let crumb = Breadcrumb(withLevel: .warning, category: "info")
             crumb.message = "We've started Sentry"
             crumb.data = [
                 "processors": Int32(ProcessInfo.processInfo.activeProcessorCount)
