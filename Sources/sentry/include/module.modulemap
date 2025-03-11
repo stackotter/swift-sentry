@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 module sentry [system] {
-  header "SentryApp.h"
+  header "SentryApp.hpp"
   export *
   link "sentry"
 }

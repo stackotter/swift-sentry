@@ -49,8 +49,6 @@ Due to a [limitation](https://github.com/apple/swift-package-manager/issues/6982
 
 1. Run `cp vendor\sentry-native\lib\win64\* "$(swift build -c debug --show-bin-path)"`
 1. Run `cp vendor\sentry-native\bin\win64\* "$(swift build -c debug --show-bin-path)"`
-1. Run `cp Examples\SentryExampleWin\Info.plist "$(swift build -c debug --show-bin-path)"`
-1. Run `cp Examples\SentryExampleWin\SentryExampleWin.exe.manifest "$(swift build -c debug --show-bin-path)"`
 
 #### macOS / Linux
 

@@ -4,6 +4,6 @@
 #define sentry_native_include_Sentry_hh
 
 #include <sentry.h>
-#include "SwiftFatalErrorMessage.h"
+#include "SwiftFatalErrorMessage.hpp"
 
 #endif
