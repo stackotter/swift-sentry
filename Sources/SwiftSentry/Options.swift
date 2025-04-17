@@ -23,7 +23,7 @@ public final class Options {
   /// "`CFBundleIdentifier`@`CFBundleShortVersionString`+`CFBundleVersion`"
   ///
   /// If `customReleaseName` is set, that value will always be used instead.
-  public var releaseName: String? = {
+  public var releaseName: String? {
     if let customReleaseName {
       return customReleaseName
     }
@@ -39,7 +39,7 @@ public final class Options {
     }
 
     return "\(bundle)@\(version)+\(build)"
-  }()
+  }
 
   public init() {}
 }
