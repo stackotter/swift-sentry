@@ -14,10 +14,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/stackotter/swift-hash",
-            .upToNextMinor(from: "0.6.4")
-        )
+        .package(url: "https://github.com/rarestype/h", from: "1.0.0"),
     ],
     targets: [
         .target(
@@ -31,7 +28,7 @@ let package = Package(
             name: "SwiftSentry",
             dependencies: [
                 "sentry",
-                .product(name: "SHA2", package: "swift-hash"),
+                .product(name: "SHA2", package: "h"),
             ]
         ),
         .testTarget(
